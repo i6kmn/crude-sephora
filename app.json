@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "Rouge Beauty",
+    "slug": "rouge-beauty",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": { "backgroundColor": "#F7F5F2" },
+    "android": { "adaptiveIcon": { "backgroundColor": "#111111" } }
+  }
+}

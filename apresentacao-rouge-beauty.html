@@ -95,8 +95,61 @@ const visibleProducts = products.filter((product) =&gt; {
 
   await onSave(form);
 };</pre><p>Antes de salvar, o aplicativo valida os campos essenciais e informa o usuário com um alerta.</p></section>
+    <section class="slide"><div class="topline"><span>09 / CÓDIGO</span><span class="red">EVENTOS DE NAVEGAÇÃO</span></div><div class="kicker">ABRIR, EDITAR E FECHAR</div><h2>O usuário controla o fluxo.</h2><pre class="code">// Abrir cadastro novo
+onAdd={() =&gt; {
+  setEditing(null);
+  setFormVisible(true);
+}}
+
+// Editar um produto
+onEdit={(item) =&gt; {
+  setEditing(item);
+  setFormVisible(true);
+}}
+
+// Fechar o formulário
+const closeForm = () =&gt; {
+  setFormVisible(false);
+  setEditing(null);
+};</pre><p>O mesmo formulário é reutilizado: sem produto selecionado ele cria; com produto selecionado ele edita.</p></section>
+    <section class="slide"><div class="topline"><span>10 / CÓDIGO</span><span class="red">TODOS OS EVENTOS</span></div><div class="kicker">BUSCA, FILTROS E FORMULÁRIO</div><h2>Interações ligadas a funções simples.</h2><pre class="code">// Pesquisa
+&lt;TextInput value={search}
+  onChangeText={setSearch} /&gt;
+
+// Filtro por categoria
+onPress={() =&gt; setCategory(item)}
+
+// Categoria no formulário
+onPress={() =&gt; update('category', category)}
+
+// Campos do formulário
+onChangeText={(value) =&gt;
+  update(field, field === 'price'
+    ? formatPrice(value) : value)}
+
+// Salvar
+onPress={submit}</pre><p>Esses eventos respondem a digitação, cliques e seleções e atualizam a tela imediatamente.</p></section>
+    <section class="slide"><div class="topline"><span>11 / CÓDIGO</span><span class="red">EXCLUSÃO</span></div><div class="kicker">CONFIRMAÇÃO E DELETE</div><h2>Uma ação destrutiva pede confirmação.</h2><pre class="code">const remove = (product) =&gt;
+  Alert.alert(
+    'Excluir produto?',
+    `“${product.name}” será removido`,
+    [
+      { text: 'Cancelar', style: 'cancel' },
+      {
+        text: 'Excluir',
+        style: 'destructive',
+        onPress: () =&gt; persist(
+          products.filter(
+            (item) =&gt; item.id !== product.id
+          )
+        ),
+      },
+    ]
+  );</pre><p>A confirmação evita exclusões acidentais e só remove o item depois da escolha do usuário.</p></section>
+    <section class="slide"><div class="topline"><span>12 / RACIOCÍNIO</span><span class="red">DECISÕES</span></div><div class="kicker">COMO A SOLUÇÃO FOI PENSADA</div><h2>Clareza antes de complexidade.</h2><div class="grid"><div class="item"><span class="number">01</span><h3>Estado centralizado</h3><p>Usei estados do React para manter produtos, busca, categoria e formulário sincronizados.</p></div><div class="item"><span class="number">02</span><h3>Componentes</h3><p>Separei Header, ProductCard e ProductForm para facilitar manutenção e leitura.</p></div><div class="item"><span class="number">03</span><h3>AsyncStorage</h3><p>Escolhi armazenamento local porque o requisito não exige servidor ou banco online.</p></div><div class="item"><span class="number">04</span><h3>Feedback</h3><p>Usei alertas, filtros e mensagens para deixar as ações claras para o usuário.</p></div></div></section>
+    <section class="slide"><div class="topline"><span>13 / RESUMO</span><span class="red">APRESENTAÇÃO</span></div><div class="kicker">CONCLUSÃO</div><h2>O que foi entregue</h2><p class="lead">O Rouge Beauty é um aplicativo de cosméticos com tema de beleza e curadoria pessoal. Ele possui CRUD funcional, persistência local, validação, busca, filtros, seleção, modais, confirmação de exclusão e uma interface organizada.</p><div class="tech"><span class="tag">Tema: cosméticos</span><span class="tag">CRUD completo</span><span class="tag">9+ interações</span><span class="tag">Validação</span><span class="tag">React Native + Expo</span></div><div class="footer">ROUGE BEAUTY / OBRIGADO</div></section>
   </main>
-  <nav class="controls"><button id="prev" type="button">ANTERIOR</button><span id="count">1 / 9</span><button id="next" type="button">PRÓXIMO</button></nav>
+  <nav class="controls"><button id="prev" type="button">ANTERIOR</button><span id="count">1 / 14</span><button id="next" type="button">PRÓXIMO</button></nav>
   <script>
     const slides = [...document.querySelectorAll('.slide')];
     const count = document.querySelector('#count');
